@@ -1,0 +1,72 @@
+seed: 42
+seed_stride_per_problem: 100
+output:
+  models_dir: models
+
+data:
+  num_samples: 300
+  noise:
+    type: gaussian
+    params:
+      mean: 0.0
+      std: 0.002
+
+training:
+  restarts: 4
+  restarts_by_method:
+    gradient_autograd: 12
+    ga: 12
+    pso: 4
+
+model:
+  layers: [1, 10, 1]
+  activation: tanh
+  param_bounds: [-8.0, 8.0]
+  init_mean: 0.0
+  init_std: 1.0
+  init_std_by_method:
+    gradient_autograd: 0.5
+    ga: 0.8
+    pso: 1.0
+
+visualization:
+  fps: 12
+  pca_components: 3
+
+problems:
+  soal_1:
+    x_range: [-4.0, 4.0]
+    true_params:
+      a: 1.2
+      b: 0.8
+  soal_2:
+    x_range: [-3.0, 3.0]
+    true_params:
+      a: 0.7
+      b: 1.5
+
+optimizers:
+  gradient_autograd:
+    iterations: 3000
+    learning_rate: 0.01
+    beta1: 0.9
+    beta2: 0.999
+    epsilon: 1.0e-8
+    lr_decay: 0.9997
+    plateau_patience: 120
+    perturb_scale: 0.05
+  pso:
+    population: 90
+    iterations: 400
+    w: 0.72
+    c1: 1.6
+    c2: 1.6
+  ga:
+    population: 120
+    iterations: 1000
+    elite_ratio: 0.2
+    mutation_rate: 0.12
+    mutation_scale: 0.08
+    stagnation_patience: 40
+    mutation_boost: 1.8
+    mutation_scale_max: 0.4
